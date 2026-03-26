@@ -26,6 +26,33 @@ export const ingredientsSlice = createSlice({
   selectors: {
     getIngredients(state) {
       return state;
+    },
+    getBuns(state) {
+      const buns: Array<TIngredient> = [];
+      state.ingredients.forEach((ingredient) => {
+        if (ingredient.type === 'bun') {
+          buns.push(ingredient);
+        }
+      });
+      return buns;
+    },
+    getSauces(state) {
+      const sauces: Array<TIngredient> = [];
+      state.ingredients.forEach((ingredient) => {
+        if (ingredient.type === 'sauce') {
+          sauces.push(ingredient);
+        }
+      });
+      return sauces;
+    },
+    getMains(state) {
+      const mains: Array<TIngredient> = [];
+      state.ingredients.forEach((ingredient) => {
+        if (ingredient.type === 'main') {
+          mains.push(ingredient);
+        }
+      });
+      return mains;
     }
   },
   extraReducers: (builder) => {
@@ -46,4 +73,5 @@ export const ingredientsSlice = createSlice({
 });
 
 export default ingredientsSlice.reducer;
-export const { getIngredients } = ingredientsSlice.selectors;
+export const { getIngredients, getBuns, getMains, getSauces } =
+  ingredientsSlice.selectors;
