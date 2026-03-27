@@ -11,7 +11,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { AppDispatch } from 'src/services/store';
-import { Navigate } from 'react-router-dom';
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,14 +32,12 @@ const App = () => {
             {error}
           </div>
         ) : ingredients.length > 0 ? (
-          <Navigate to='/' />
+          <AppRoutes />
         ) : (
           <div className={`${styles.title} text text_type_main-medium pt-4`}>
             Нет игредиентов
           </div>
         )}
-
-        <AppRoutes />
       </div>
     </>
   );
