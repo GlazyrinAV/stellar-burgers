@@ -1,37 +1,88 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TConstructorIngredient } from '@utils-types';
+import { TConstructorIngredient, TIngredient } from '@utils-types';
 
 type TConstructorItems = {
   bun: TConstructorIngredient | null;
   ingredients: TConstructorIngredient[];
 };
 
-const constructorItemsInitialState: TConstructorItems = {
-  bun: null,
-  ingredients: []
+type TConstructorItemsState = {
+  constructorItems: TConstructorItems;
+  counter: string;
+};
+
+const constructorItemsInitialState: TConstructorItemsState = {
+  constructorItems: {
+    bun: null,
+    ingredients: []
+  },
+  counter: '0'
 };
 
 export const constructorItemsSlice = createSlice({
   name: 'constructorItems',
   initialState: constructorItemsInitialState,
   reducers: {
-    addIngredient(state, action: PayloadAction<TConstructorIngredient>) {
-      if (action.payload.type === 'bun') {
-        state.bun = action.payload;
-      } else if (
-        action.payload.type === 'sauce' ||
-        action.payload.type === 'main'
+    addIngredient(state, action: PayloadAction<TIngredient>) {
+      const ingredient: TConstructorIngredient = {
+        ...action.payload,
+        id: state.counter
+      };
+      if (ingredient.type === 'bun') {
+        state.constructorItems.bun = ingredient;
+      } else if (ingredient.type === 'sauce' || ingredient.type === 'main') {
+        state.constructorItems.ingredients.push(ingredient);
+      }
+      state.counter = String(parseInt(state.counter) + 1);
+    },
+    moveDown(state, action: PayloadAction<number>) {
+      const currentIndex = action.payload;
+      const targetIndex = action.payload + 1;
+      console.log(currentIndex);
+      console.log(targetIndex);
+      if (
+        currentIndex >= 0 &&
+        currentIndex < state.constructorItems.ingredients.length
       ) {
-        state.ingredients.push(action.payload);
+        const currentIngredient =
+          state.constructorItems.ingredients[currentIndex];
+        const targetIngredient =
+          state.constructorItems.ingredients[targetIndex];
+        state.constructorItems.ingredients.splice(
+          currentIndex,
+          2,
+          targetIngredient,
+          currentIngredient
+        );
+      }
+    },
+    moveUp(state, action: PayloadAction<number>) {
+      const currentIndex = action.payload - 1;
+      const targetIndex = action.payload;
+      if (
+        currentIndex >= 0 &&
+        currentIndex < state.constructorItems.ingredients.length - 1
+      ) {
+        const currentIngredient =
+          state.constructorItems.ingredients[currentIndex];
+        const targetIngredient =
+          state.constructorItems.ingredients[targetIndex];
+        state.constructorItems.ingredients.splice(
+          currentIndex,
+          2,
+          targetIngredient,
+          currentIngredient
+        );
       }
     },
     removeIngredient(state, action: PayloadAction<String>) {
-      if (state.bun?.id === action.payload) {
-        state.bun = null;
+      if (state.constructorItems.bun?.id === action.payload) {
+        state.constructorItems.bun = null;
       } else {
-        state.ingredients = state.ingredients.filter(
-          (item) => item.id !== action.payload
-        );
+        state.constructorItems.ingredients =
+          state.constructorItems.ingredients.filter(
+            (item) => item.id !== action.payload
+          );
       }
     },
     clearConstructor(state) {
@@ -40,10 +91,12 @@ export const constructorItemsSlice = createSlice({
   },
   selectors: {
     getConstructorItems(state) {
-      return state;
+      return state.constructorItems;
     }
   }
 });
 
 export default constructorItemsSlice.reducer;
+export const { addIngredient, removeIngredient, moveDown, moveUp } =
+  constructorItemsSlice.actions;
 export const { getConstructorItems } = constructorItemsSlice.selectors;
