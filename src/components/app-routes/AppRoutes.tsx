@@ -9,7 +9,13 @@ import {
   ProfileOrders,
   NotFound404
 } from '@pages';
-import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  useParams,
+  useNavigate,
+  useLocation
+} from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route/ProtectedRoute';
 import { IngredientDetails } from '../ingredient-details';
 import { Modal } from '../modal';
@@ -18,9 +24,12 @@ import { OrderInfo } from '../order-info';
 export const AppRoutes = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const backgroundLocation = location.state?.background;
+
   return (
     <>
-      <Routes>
+      <Routes location={backgroundLocation || location}>
         <Route path='/' element={<ConstructorPage />} />
 
         <Route path='/feed' element={<Feed />} />
@@ -95,14 +104,7 @@ export const AppRoutes = () => {
           }
         />
 
-        <Route
-          path='/ingredients/:id'
-          element={
-            <Modal title='Детали ингридиента' onClose={() => navigate('/')}>
-              <IngredientDetails />
-            </Modal>
-          }
-        />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
 
         <Route
           path='/profile/orders/:number'
@@ -122,6 +124,19 @@ export const AppRoutes = () => {
 
         <Route path='*' element={<NotFound404 />} />
       </Routes>
+
+      {backgroundLocation && (
+        <Routes>
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal title='Детали ингридиента' onClose={() => navigate('/')}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
 
       {/* <Routes>
       <Route
