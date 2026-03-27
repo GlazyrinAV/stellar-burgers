@@ -10,7 +10,7 @@ import {
 } from '../../services/slice/ingredients/ingredients-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { AppDispatch } from 'src/services/store';
+import { AppDispatch } from '../../services/store';
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();
