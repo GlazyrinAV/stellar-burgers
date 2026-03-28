@@ -9,13 +9,7 @@ import {
   ProfileOrders,
   NotFound404
 } from '@pages';
-import {
-  Routes,
-  Route,
-  useParams,
-  useNavigate,
-  useLocation
-} from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route/ProtectedRoute';
 import { IngredientDetails } from '../ingredient-details';
 import { Modal } from '../modal';
@@ -36,7 +30,6 @@ export const routes = {
 };
 
 export const AppRoutes = () => {
-  const params = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const backgroundLocation = location.state?.background;
@@ -107,12 +100,7 @@ export const AppRoutes = () => {
         <Route
           path={routes.currentFeed}
           element={
-            <Modal
-              title=''
-              onClose={() => {
-                params.number;
-              }}
-            >
+            <Modal title='' onClose={() => navigate(routes.feed)}>
               <OrderInfo />
             </Modal>
           }
@@ -126,12 +114,7 @@ export const AppRoutes = () => {
         <Route
           path={routes.currentProfileOrder}
           element={
-            <Modal
-              title=''
-              onClose={() => {
-                params.number;
-              }}
-            >
+            <Modal title='' onClose={() => navigate(routes.profile)}>
               <ProtectedRoute>
                 <OrderInfo />
               </ProtectedRoute>

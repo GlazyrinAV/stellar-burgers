@@ -86,7 +86,8 @@ export const constructorItemsSlice = createSlice({
       }
     },
     clearConstructor(state) {
-      state = constructorItemsInitialState;
+      state.constructorItems.bun = null;
+      state.constructorItems.ingredients = [];
     }
   },
   selectors: {
@@ -97,6 +98,11 @@ export const constructorItemsSlice = createSlice({
 });
 
 export default constructorItemsSlice.reducer;
-export const { addIngredient, removeIngredient, moveDown, moveUp } =
-  constructorItemsSlice.actions;
+export const {
+  addIngredient,
+  removeIngredient,
+  moveDown,
+  moveUp,
+  clearConstructor
+} = constructorItemsSlice.actions;
 export const { getConstructorItems } = constructorItemsSlice.selectors;

@@ -13,7 +13,7 @@ import { routes } from '../../../components/app-routes/AppRoutes';
 
 export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => {
   const location = useLocation();
-  console.log(location);
+
   return (
     <header className={styles.header}>
       <nav className={`${styles.menu} p-4`}>
