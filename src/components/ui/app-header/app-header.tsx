@@ -9,18 +9,23 @@ import {
 } from '@zlden/react-developer-burger-ui-components';
 import { Link, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
+import { routes } from '../../../components/app-routes/AppRoutes';
 
 export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => {
   const location = useLocation();
+  console.log(location);
   return (
     <header className={styles.header}>
       <nav className={`${styles.menu} p-4`}>
         <div className={styles.menu_part_left}>
           <Link
-            to='/'
+            to={routes.main}
             className={clsx(
               styles.link,
-              location.pathname === '/' ? styles.link_active : ''
+              !location.pathname.includes(routes.feed) &&
+                !location.pathname.includes(routes.profile)
+                ? styles.link_active
+                : ''
             )}
           >
             <BurgerIcon type={'primary'} />
@@ -29,10 +34,10 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => {
             </p>
           </Link>
           <Link
-            to='/feed'
+            to={routes.feed}
             className={clsx(
               styles.link,
-              location.pathname === '/feed' ? styles.link_active : ''
+              location.pathname.includes(routes.feed) ? styles.link_active : ''
             )}
           >
             <ListIcon type={'primary'} />
@@ -43,11 +48,11 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => {
           <Logo className='' />
         </div>
         <Link
-          to='/profile'
+          to={routes.profile}
           className={clsx(
             styles.link,
             styles.link_position_last,
-            location.pathname === '/profile' ? styles.link_active : ''
+            location.pathname.includes(routes.profile) ? styles.link_active : ''
           )}
         >
           <ProfileIcon type={'primary'} />

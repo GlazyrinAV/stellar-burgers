@@ -21,6 +21,20 @@ import { IngredientDetails } from '../ingredient-details';
 import { Modal } from '../modal';
 import { OrderInfo } from '../order-info';
 
+export const routes = {
+  main: '/',
+  currentIngredient: '/ingredients/:id',
+  feed: '/feed',
+  currentFeed: '/feed/:number',
+  login: '/login',
+  register: '/register',
+  forgotPassword: '/forgot-password',
+  resetPassword: '/reset-password',
+  profile: '/profile',
+  currentProfileOrder: '/profile/orders:number',
+  orders: 'orders'
+};
+
 export const AppRoutes = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -30,12 +44,12 @@ export const AppRoutes = () => {
   return (
     <>
       <Routes location={backgroundLocation || location}>
-        <Route path='/' element={<ConstructorPage />} />
+        <Route path={routes.main} element={<ConstructorPage />} />
 
-        <Route path='/feed' element={<Feed />} />
+        <Route path={routes.feed} element={<Feed />} />
 
         <Route
-          path='/login'
+          path={routes.login}
           element={
             <ProtectedRoute>
               <Login />
@@ -44,7 +58,7 @@ export const AppRoutes = () => {
         />
 
         <Route
-          path='/register'
+          path={routes.register}
           element={
             <ProtectedRoute>
               <Register />
@@ -53,7 +67,7 @@ export const AppRoutes = () => {
         />
 
         <Route
-          path='/forgot-password'
+          path={routes.forgotPassword}
           element={
             <ProtectedRoute>
               <ForgotPassword />
@@ -62,7 +76,7 @@ export const AppRoutes = () => {
         />
 
         <Route
-          path='/reset-password'
+          path={routes.forgotPassword}
           element={
             <ProtectedRoute>
               <ResetPassword />
@@ -70,7 +84,7 @@ export const AppRoutes = () => {
           }
         />
 
-        <Route path='/profile'>
+        <Route path={routes.profile}>
           <Route
             index
             element={
@@ -81,7 +95,7 @@ export const AppRoutes = () => {
           />
 
           <Route
-            path='orders'
+            path={routes.orders}
             element={
               <ProtectedRoute>
                 <ProfileOrders />
@@ -91,7 +105,7 @@ export const AppRoutes = () => {
         </Route>
 
         <Route
-          path='/feed/:number'
+          path={routes.currentFeed}
           element={
             <Modal
               title=''
@@ -104,10 +118,13 @@ export const AppRoutes = () => {
           }
         />
 
-        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route
+          path={routes.currentIngredient}
+          element={<IngredientDetails />}
+        />
 
         <Route
-          path='/profile/orders/:number'
+          path={routes.currentProfileOrder}
           element={
             <Modal
               title=''
@@ -128,9 +145,12 @@ export const AppRoutes = () => {
       {backgroundLocation && (
         <Routes>
           <Route
-            path='/ingredients/:id'
+            path={routes.currentIngredient}
             element={
-              <Modal title='Детали ингридиента' onClose={() => navigate('/')}>
+              <Modal
+                title='Детали ингридиента'
+                onClose={() => navigate(routes.main)}
+              >
                 <IngredientDetails />
               </Modal>
             }
