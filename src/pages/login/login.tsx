@@ -3,13 +3,12 @@ import { LoginUI } from '@ui-pages';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAuthError, loginUser } from '../../services/slice/auth/auth-slice';
 import { AppDispatch } from 'src/services/store';
-import { Preloader } from '@ui';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch<AppDispatch>();
-  const { authError, authRequest } = useSelector(getAuthError);
+  const { authError } = useSelector(getAuthError);
   let errorText = '';
 
   const handleSubmit = (e: SyntheticEvent) => {
@@ -19,10 +18,6 @@ export const Login: FC = () => {
     }
     dispatch(loginUser({ email: email, password: password }));
   };
-
-  if (authRequest) {
-    return <Preloader />;
-  }
 
   if (authError) {
     errorText =

@@ -8,7 +8,11 @@ import {
 } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
-import { getCookie } from '../../../../src/utils/cookie';
+import {
+  deleteCookie,
+  getCookie,
+  setCookie
+} from '../../../../src/utils/cookie';
 
 type TUserState = {
   isAuthChecked: boolean;
@@ -90,6 +94,8 @@ export const userSlice = createSlice({
         state.isAuthenticated = true;
         state.isAuthChecked = true;
         state.authRequest = false;
+        setCookie('accessToken', action.payload.accessToken);
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.authError = action.error.message as string;
@@ -108,10 +114,39 @@ export const userSlice = createSlice({
         state.authError = null;
       })
       .addCase(registerUser.rejected, (state, action) => {
-        (state.authError = action.error.message as string),
-          (state.authRequest = false);
+        state.authError = action.error.message as string;
+        state.authRequest = false;
       })
       .addCase(registerUser.pending, (state) => {
+        state.authRequest = true;
+        state.authError = null;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.authRequest = false;
+        state.data = action.payload.user;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.authError = action.error.message as string;
+        state.authRequest = false;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.authRequest = true;
+        state.authError = null;
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.data = null;
+        state.isAuthenticated = false;
+        state.isAuthChecked = false;
+        state.authRequest = false;
+        state.authError = null;
+        deleteCookie('accessToken');
+        localStorage.removeItem('refreshToken');
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.authError = action.error.message as string;
+        state.authRequest = false;
+      })
+      .addCase(logout.pending, (state) => {
         state.authRequest = true;
         state.authError = null;
       });

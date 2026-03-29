@@ -9,7 +9,6 @@ import {
 } from '../../services/slice/auth/auth-slice';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../components/app-routes/AppRoutes';
-import { Preloader } from '@ui';
 
 export const Register: FC = () => {
   const [userName, setUserName] = useState('');
@@ -29,10 +28,6 @@ export const Register: FC = () => {
       registerUser({ name: userName, email: email, password: password })
     );
   };
-
-  if (authRequest) {
-    return <Preloader />;
-  }
 
   if (!authError && !authRequest && user) {
     navigate(routes.login);

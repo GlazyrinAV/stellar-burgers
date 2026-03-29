@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import {
-  getIsAuthChecked,
+  getAuthError,
   getUserData
 } from '../../services/slice/auth/auth-slice';
 import { Preloader } from '@ui';
@@ -16,11 +16,11 @@ export const ProtectedRoute = ({
   children,
   onlyUnAuth
 }: ProtectedRouteProps) => {
-  const isAuthChecked = useSelector(getIsAuthChecked);
+  const { authRequest } = useSelector(getAuthError);
   const user = useSelector(getUserData);
   const location = useLocation();
 
-  if (!isAuthChecked) {
+  if (authRequest) {
     return <Preloader />;
   }
 
