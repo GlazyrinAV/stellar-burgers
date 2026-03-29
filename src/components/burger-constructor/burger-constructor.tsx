@@ -11,7 +11,10 @@ import {
   makeOrder,
   resetOrder
 } from '../../services/slice/order-burger/order-burger-slice';
-import { AppDispatch } from 'src/services/store';
+import { getUserData } from '../../services/slice/auth/auth-slice';
+import { AppDispatch } from '../../services/store';
+import { routes } from '../app-routes/AppRoutes';
+import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
@@ -19,12 +22,19 @@ export const BurgerConstructor: FC = () => {
   const orderRequest = useSelector(getNewOrder).isLoading;
   const orderModalData = useSelector(getNewOrder).order;
   const dispatch = useDispatch<AppDispatch>();
+  const user = useSelector(getUserData);
+  const navigate = useNavigate();
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
+    if (!user) {
+      console.log('user', user);
+      return navigate(routes.login);
+    }
     dispatch(resetOrder());
     dispatch(makeOrder(constructorItems.ingredients.map((item) => item._id)));
   };
+
   const closeOrderModal = () => {
     dispatch(clearConstructor());
     dispatch(resetOrder());

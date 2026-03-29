@@ -11,6 +11,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { AppDispatch } from '../../services/store';
+import { authChecked } from '../../services/slice/auth/auth-slice';
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,6 +20,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchIngredients());
+    dispatch(authChecked());
   }, []);
 
   return (

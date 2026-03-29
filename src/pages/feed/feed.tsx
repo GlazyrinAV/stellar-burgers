@@ -23,6 +23,6 @@ export const Feed: FC = () => {
   }
 
   return (
-    <FeedUI orders={orders} handleGetFeeds={() => <Navigate to='/feed' />} />
+    <FeedUI orders={orders} handleGetFeeds={() => dispatch(fetchFeeds())} />
   );
 };

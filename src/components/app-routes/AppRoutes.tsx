@@ -44,7 +44,7 @@ export const AppRoutes = () => {
         <Route
           path={routes.login}
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <Login />
             </ProtectedRoute>
           }
@@ -53,7 +53,7 @@ export const AppRoutes = () => {
         <Route
           path={routes.register}
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <Register />
             </ProtectedRoute>
           }
@@ -62,16 +62,16 @@ export const AppRoutes = () => {
         <Route
           path={routes.forgotPassword}
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <ForgotPassword />
             </ProtectedRoute>
           }
         />
 
         <Route
-          path={routes.forgotPassword}
+          path={routes.resetPassword}
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <ResetPassword />
             </ProtectedRoute>
           }
