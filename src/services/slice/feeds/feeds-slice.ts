@@ -1,4 +1,4 @@
-import { getFeedsApi } from '@api';
+import { getFeedsApi, getOrdersApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
@@ -20,6 +20,10 @@ const TFeedsInitialState: TFeedsState = {
 
 export const fetchFeeds = createAsyncThunk('feed/getFeeds', async () =>
   getFeedsApi()
+);
+
+export const fetchOrders = createAsyncThunk('feed/getchOrders', async () =>
+  getOrdersApi()
 );
 
 export const feedsSlice = createSlice({
@@ -44,6 +48,18 @@ export const feedsSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(fetchFeeds.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchOrders.fulfilled, (state, action) => {
+        state.orders = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchOrders.rejected, (state, action) => {
+        state.error = action.error.message as string;
+        state.isLoading = false;
+      })
+      .addCase(fetchOrders.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       });

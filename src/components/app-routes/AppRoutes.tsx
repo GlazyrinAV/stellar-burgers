@@ -26,7 +26,7 @@ export const routes = {
   resetPassword: '/reset-password',
   profile: '/profile',
   currentProfileOrder: '/profile/orders:number',
-  orders: 'orders'
+  profileOrders: 'orders'
 };
 
 export const AppRoutes = () => {
@@ -88,7 +88,7 @@ export const AppRoutes = () => {
           />
 
           <Route
-            path={routes.orders}
+            path={routes.profileOrders}
             element={
               <ProtectedRoute>
                 <ProfileOrders />

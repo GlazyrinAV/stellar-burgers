@@ -3,7 +3,7 @@ import { RegisterUI } from '@ui-pages';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/services/store';
 import {
-  getAuthError,
+  getAuthStatus,
   getUserData,
   registerUser
 } from '../../services/slice/auth/auth-slice';
@@ -17,7 +17,7 @@ export const Register: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const user = useSelector(getUserData);
-  const { authError, authRequest } = useSelector(getAuthError);
+  const { authError, authRequest } = useSelector(getAuthStatus);
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();

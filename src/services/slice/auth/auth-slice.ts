@@ -77,14 +77,16 @@ export const userSlice = createSlice({
     getUserData(state) {
       return state.data;
     },
-    getIsAuthenticated(state) {
-      return state.isAuthenticated;
-    },
     getIsAuthChecked(state) {
       return state.isAuthChecked;
     },
-    getAuthError(state) {
-      return { authError: state.authError, authRequest: state.authRequest };
+    getAuthStatus(state) {
+      return {
+        authError: state.authError,
+        authRequest: state.authRequest,
+        isAuthChecked: state.isAuthChecked,
+        IsAuthenticated: state.isAuthenticated
+      };
     }
   },
   extraReducers: (builder) => {
@@ -154,10 +156,6 @@ export const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const {
-  getUserData,
-  getIsAuthenticated,
-  getIsAuthChecked,
-  getAuthError
-} = userSlice.selectors;
+export const { getUserData, getIsAuthChecked, getAuthStatus } =
+  userSlice.selectors;
 export const { authChecked } = userSlice.actions;

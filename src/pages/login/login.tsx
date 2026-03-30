@@ -1,14 +1,14 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAuthError, loginUser } from '../../services/slice/auth/auth-slice';
+import { getAuthStatus, loginUser } from '../../services/slice/auth/auth-slice';
 import { AppDispatch } from 'src/services/store';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch<AppDispatch>();
-  const { authError } = useSelector(getAuthError);
+  const { authError } = useSelector(getAuthStatus);
   let errorText = '';
 
   const handleSubmit = (e: SyntheticEvent) => {

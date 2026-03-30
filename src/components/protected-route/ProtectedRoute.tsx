@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import {
-  getAuthError,
+  getAuthStatus,
   getUserData
 } from '../../services/slice/auth/auth-slice';
 import { Preloader } from '@ui';
@@ -16,7 +16,7 @@ export const ProtectedRoute = ({
   children,
   onlyUnAuth
 }: ProtectedRouteProps) => {
-  const { authRequest } = useSelector(getAuthError);
+  const { authRequest } = useSelector(getAuthStatus);
   const user = useSelector(getUserData);
   const location = useLocation();
 
