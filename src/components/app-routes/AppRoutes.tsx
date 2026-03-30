@@ -19,14 +19,17 @@ export const routes = {
   main: '/',
   currentIngredient: '/ingredients/:id',
   feed: '/feed',
-  currentFeed: '/feed/:number',
+  currentFeed: ':number',
+  currentFeedAbsolute: '/feed/:number',
   login: '/login',
   register: '/register',
   forgotPassword: '/forgot-password',
   resetPassword: '/reset-password',
   profile: '/profile',
-  currentProfileOrder: '/profile/orders:number',
-  profileOrders: 'orders'
+  profileOrders: 'orders',
+  profileOredersAbsolute: '/profile/orders',
+  currentProfileOrder: ':number',
+  currentProfileOrderAbsolute: '/profile/orders/:number'
 };
 
 export const AppRoutes = () => {
@@ -39,7 +42,11 @@ export const AppRoutes = () => {
       <Routes location={backgroundLocation || location}>
         <Route path={routes.main} element={<ConstructorPage />} />
 
-        <Route path={routes.feed} element={<Feed />} />
+        <Route path={routes.feed}>
+          <Route index element={<Feed />} />
+
+          <Route path={routes.currentFeed} element={<OrderInfo />} />
+        </Route>
 
         <Route
           path={routes.login}
@@ -87,39 +94,30 @@ export const AppRoutes = () => {
             }
           />
 
-          <Route
-            path={routes.profileOrders}
-            element={
-              <ProtectedRoute>
-                <ProfileOrders />
-              </ProtectedRoute>
-            }
-          />
-        </Route>
+          <Route path={routes.profileOrders}>
+            <Route
+              index
+              element={
+                <ProtectedRoute>
+                  <ProfileOrders />
+                </ProtectedRoute>
+              }
+            />
 
-        <Route
-          path={routes.currentFeed}
-          element={
-            <Modal title='' onClose={() => navigate(routes.feed)}>
-              <OrderInfo />
-            </Modal>
-          }
-        />
+            <Route
+              path={routes.currentProfileOrder}
+              element={
+                <ProtectedRoute>
+                  <OrderInfo />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+        </Route>
 
         <Route
           path={routes.currentIngredient}
           element={<IngredientDetails />}
-        />
-
-        <Route
-          path={routes.currentProfileOrder}
-          element={
-            <Modal title='' onClose={() => navigate(routes.profile)}>
-              <ProtectedRoute>
-                <OrderInfo />
-              </ProtectedRoute>
-            </Modal>
-          }
         />
 
         <Route path='*' element={<NotFound404 />} />
@@ -141,45 +139,33 @@ export const AppRoutes = () => {
         </Routes>
       )}
 
-      {/* <Routes>
-      <Route
-        path='/feed/:number'
-        element={
-          <Modal title='' onClose={() => {}}>
-            <OrderInfo />
-          </Modal>
-        }
-      />
-    </Routes>
+      {backgroundLocation && (
+        <Routes>
+          <Route
+            path={routes.currentProfileOrderAbsolute}
+            element={
+              <Modal title='' onClose={() => navigate(-1)}>
+                <ProtectedRoute>
+                  <OrderInfo />
+                </ProtectedRoute>
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
 
-    <Routes>
-      <Route
-          path='/ingredients/:id'
-          element={
-            <Modal
-              title='Детали ингридиента'
-              onClose={() => {
-                params.id;
-              }}
-            >
-              <IngredientDetails />
-            </Modal>
-          }
-        />
-    </Routes>
-
-    <Routes>
-      <Route
-        path='/profile/orders/:number'
-        element={
-          <Modal title='' onClose={() => {}}>
-            <ProtectedRoute>
-              <OrderInfo />
-            </ProtectedRoute>
-          </Modal>
-        }
-      />
-    </Routes> */}
+      {backgroundLocation && (
+        <Routes>
+          <Route
+            path={routes.currentFeedAbsolute}
+            element={
+              <Modal title='' onClose={() => navigate(-1)}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </>
   );
 };
