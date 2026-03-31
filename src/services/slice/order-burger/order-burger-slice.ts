@@ -9,7 +9,6 @@ export const makeOrder = createAsyncThunk(
     const response = orderBurgerApi(data).then((response) => {
       if (response.success) {
         dispatch(clearConstructor());
-        dispatch(resetOrder());
       }
       return response;
     });

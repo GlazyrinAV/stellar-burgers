@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getConstructorItems } from '../../services/slice/burger-constructor/burger-constructor-slice';
 import {
   getNewOrder,
-  makeOrder
+  makeOrder,
+  resetOrder
 } from '../../services/slice/order-burger/order-burger-slice';
 import { getUserData } from '../../services/slice/auth/auth-slice';
 import { AppDispatch } from '../../services/store';
@@ -34,7 +35,7 @@ export const BurgerConstructor: FC = () => {
   };
 
   const closeOrderModal = () => {
-    navigate(0);
+    dispatch(resetOrder());
   };
 
   const price = useMemo(
