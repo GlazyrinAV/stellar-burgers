@@ -14,6 +14,7 @@ import { ProtectedRoute } from '../protected-route/ProtectedRoute';
 import { IngredientDetails } from '../ingredient-details';
 import { Modal } from '../modal';
 import { OrderInfo } from '../order-info';
+import styles from '../app/app.module.css';
 
 export const routes = {
   main: '/',
@@ -98,18 +99,22 @@ export const AppRoutes = () => {
             <Route
               index
               element={
-                <ProtectedRoute>
-                  <ProfileOrders />
-                </ProtectedRoute>
+                <div className={styles.detailPageWrap}>
+                  <ProtectedRoute>
+                    <ProfileOrders />
+                  </ProtectedRoute>
+                </div>
               }
             />
 
             <Route
               path={routes.currentProfileOrder}
               element={
-                <ProtectedRoute>
-                  <OrderInfo />
-                </ProtectedRoute>
+                <div className={styles.detailPageWrap}>
+                  <ProtectedRoute>
+                    <OrderInfo />
+                  </ProtectedRoute>
+                </div>
               }
             />
           </Route>
@@ -117,7 +122,14 @@ export const AppRoutes = () => {
 
         <Route
           path={routes.currentIngredient}
-          element={<IngredientDetails />}
+          element={
+            <div className={styles.detailPageWrap}>
+              <p className={`text text_type_main-large ${styles.detailHeader}`}>
+                Детали ингредиента
+              </p>
+              <IngredientDetails />
+            </div>
+          }
         />
 
         <Route path='*' element={<NotFound404 />} />
@@ -136,11 +148,7 @@ export const AppRoutes = () => {
               </Modal>
             }
           />
-        </Routes>
-      )}
 
-      {backgroundLocation && (
-        <Routes>
           <Route
             path={routes.currentProfileOrderAbsolute}
             element={
@@ -151,11 +159,7 @@ export const AppRoutes = () => {
               </Modal>
             }
           />
-        </Routes>
-      )}
 
-      {backgroundLocation && (
-        <Routes>
           <Route
             path={routes.currentFeedAbsolute}
             element={
