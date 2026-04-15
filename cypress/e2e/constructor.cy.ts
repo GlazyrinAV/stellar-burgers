@@ -32,11 +32,53 @@ describe('добавление ингредиента из списка в ко�
   });
 });
 
-// describe('работа модальных окон', function () {
-//   describe('открытие модального окна ингредиента');
-//   describe('закрытие по клику на крестик');
-//   describe('закрытие по клику на оверлей');
-// });
+describe('работа модальных окон', function () {
+  describe('открытие модального окна ингредиента', function () {
+    it('открытие модального окна ингредиента', function () {
+      cy.intercept(
+        'GET',
+        'https://norma.education-services.ru/api/ingredients',
+        {
+          fixture: 'ingredients'
+        }
+      );
+      cy.visit('http://localhost:4000');
+      cy.get(`[data-cy=${1}]`).click();
+      const modal = cy.get('#modals');
+      modal.contains('Детали ингридиента').should('be.visible');
+    });
+  });
+  describe('закрытие по клику на крестик', function () {
+    it('закрытие по клику на крестик', function () {
+      cy.intercept(
+        'GET',
+        'https://norma.education-services.ru/api/ingredients',
+        {
+          fixture: 'ingredients'
+        }
+      );
+      cy.visit('http://localhost:4000');
+      cy.get(`[data-cy=${1}]`).click();
+      cy.get('#modals').find('button').click();
+      cy.get('#modals').should('not.be.visible');
+    });
+  });
+  describe('закрытие по клику на оверлей', function () {
+    it('закрытие по клику на оверлей', function () {
+      cy.intercept(
+        'GET',
+        'https://norma.education-services.ru/api/ingredients',
+        {
+          fixture: 'ingredients'
+        }
+      );
+      cy.visit('http://localhost:4000');
+      cy.get(`[data-cy=${1}]`).click();
+      cy.get(`[data-cy="overlay"]`).click('topLeft', { force: true });
+      cy.get('#modals').should('not.be.visible');
+    });
+  });
+});
 
 // describe('создание заказа', function () {
 //   describe('cозданы моковые данные ответа на запрос данных пользователя');
