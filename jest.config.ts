@@ -3,7 +3,8 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type { JestConfigWithTsJest } from 'ts-jest';
+import { pathsToModuleNameMapper, type JestConfigWithTsJest } from 'ts-jest';
+const { compilerOptions } = require('./tsconfig.json');
 
 const config: JestConfigWithTsJest = {
   // All imported modules in your tests should be mocked automatically
@@ -73,9 +74,7 @@ const config: JestConfigWithTsJest = {
   // maxWorkers: "50%",
 
   // An array of directory names to be searched recursively up from the requiring module's location
-  // moduleDirectories: [
-  //   "node_modules"
-  // ],
+  // moduleDirectories: ['node_modules', 'src'],
 
   // An array of file extensions your modules use
   // moduleFileExtensions: [
@@ -196,7 +195,16 @@ const config: JestConfigWithTsJest = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+  // moduleNameMapper: {
+  //   // Map absolute paths to src/[directory]/[file]
+  //   '^api/(.*)$': '<rootDir>/src/utils/burger-api.ts'
+  //   // Add more aliases as needed (e.g., pages, hooks)
+  // },
+  // modulePaths: ['<rootDir>/src'],
   preset: 'ts-jest',
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+    prefix: '<rootDir>/'
+  }),
   transform: {
     // '^.+\\.[tj]sx?$' для обработки файлов js/ts с помощью `ts-jest`
     // '^.+\\.m?[tj]sx?$' для обработки файлов js/ts/mjs/mts с помощью `ts-jest`
