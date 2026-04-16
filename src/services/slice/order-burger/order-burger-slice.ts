@@ -50,11 +50,12 @@ export const orderBurgerSlice = createSlice({
         state.order = { ...action.payload.order, ingredients: [] };
       })
       .addCase(makeOrder.rejected, (state, action) => {
-        (state.error = action.error.message as string),
-          (state.isLoading = false);
+        state.error = action.error.message as string;
+        state.isLoading = false;
       })
       .addCase(makeOrder.pending, (state) => {
-        (state.isLoading = true), (state.error = null);
+        state.isLoading = true;
+        state.error = null;
       });
   }
 });
