@@ -6,6 +6,8 @@ describe('Проверка слайса Order-Burger', () => {
     test('Проверка makeOrder.pending', () => {});
   });
   describe('Проверка отправки заказа c Rejected', () => {
-    test('Проверка makeOrder.rejected', () => {});
+    test('Проверка makeOrder.rejected', () => {
+      const error = new Error('Ошибка');
+    });
   });
 });

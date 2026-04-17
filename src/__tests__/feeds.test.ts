@@ -6,7 +6,9 @@ describe('Проверка слайса Feeds', () => {
     test('Проверка fetchFeeds.pending', () => {});
   });
   describe('Проверка получения общих Feeds c Rejected', () => {
-    test('Проверка fetchFeeds.rejected', () => {});
+    test('Проверка fetchFeeds.rejected', () => {
+      const error = new Error('Ошибка');
+    });
   });
 
   describe('Проверка получения Orders c Fullfiled', () => {
@@ -16,6 +18,8 @@ describe('Проверка слайса Feeds', () => {
     test('Проверка fetchOrders.pending', () => {});
   });
   describe('Проверка получения Orders c Rejected', () => {
-    test('Проверка fetchOrders.rejected', () => {});
+    test('Проверка fetchOrders.rejected', () => {
+      const error = new Error('Ошибка');
+    });
   });
 });

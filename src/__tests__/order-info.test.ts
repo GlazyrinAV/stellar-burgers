@@ -6,6 +6,8 @@ describe('Проверка слайса Order-Info', () => {
     test('Проверка findOrderById.pending', () => {});
   });
   describe('Проверка получения информации о заказе c Rejected', () => {
-    test('Проверка findOrderById.rejected', () => {});
+    test('Проверка findOrderById.rejected', () => {
+      const error = new Error('Ошибка');
+    });
   });
 });

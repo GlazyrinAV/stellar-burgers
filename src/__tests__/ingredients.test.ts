@@ -10,6 +10,8 @@ describe('Проверка слайса Ingredients', () => {
     test('Проверка fetchIngredients.pending', () => {});
   });
   describe('Проверка получения Ingredients c Rejected', () => {
-    test('Проверка fetchIngredients.rejected', () => {});
+    test('Проверка fetchIngredients.rejected', () => {
+      const error = new Error('Ошибка');
+    });
   });
 });

@@ -6,7 +6,9 @@ describe('Проверка слайса Auth', () => {
     test('Проверка loginUser.pending', () => {});
   });
   describe('Проверка Login c Rejected', () => {
-    test('Проверка loginUser.rejected', () => {});
+    test('Проверка loginUser.rejected', () => {
+      const error = new Error('Ошибка');
+    });
   });
 
   describe('Проверка Register User c Fullfiled', () => {
@@ -16,7 +18,9 @@ describe('Проверка слайса Auth', () => {
     test('Проверка registerUser.pending', () => {});
   });
   describe('Проверка Register User c Rejected', () => {
-    test('Проверка registerUser.rejected', () => {});
+    test('Проверка registerUser.rejected', () => {
+      const error = new Error('Ошибка');
+    });
   });
 
   describe('Проверка Update User c Fullfiled', () => {
@@ -26,7 +30,9 @@ describe('Проверка слайса Auth', () => {
     test('Проверка updateUser.pending', () => {});
   });
   describe('Проверка Update User c Rejected', () => {
-    test('Проверка updateUser.rejected', () => {});
+    test('Проверка updateUser.rejected', () => {
+      const error = new Error('Ошибка');
+    });
   });
 
   describe('Проверка Logout User c Fullfiled', () => {
@@ -36,7 +42,9 @@ describe('Проверка слайса Auth', () => {
     test('Проверка logoutUser.pending', () => {});
   });
   describe('Проверка Logout User c Rejected', () => {
-    test('Проверка logoutUser.rejected', () => {});
+    test('Проверка logoutUser.rejected', () => {
+      const error = new Error('Ошибка');
+    });
   });
 
   describe('Проверка получения User c Fullfiled', () => {
@@ -46,6 +54,8 @@ describe('Проверка слайса Auth', () => {
     test('Проверка getUser.pending', () => {});
   });
   describe('Проверка получения User c Rejected', () => {
-    test('Проверка getUser.rejected', () => {});
+    test('Проверка getUser.rejected', () => {
+      const error = new Error('Ошибка');
+    });
   });
 });
