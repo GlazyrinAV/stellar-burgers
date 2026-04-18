@@ -4,7 +4,7 @@ import authSlice, {
   logout,
   registerUser,
   updateUser
-} from 'src/services/slice/auth/auth-slice';
+} from '../services/slice/auth/auth-slice';
 import store from '../services/store';
 import { register } from 'module';
 
@@ -35,6 +35,14 @@ describe('Проверка слайса Auth', () => {
           { email: '', password: '' }
         )
       );
+      const expectedState = {
+        isAuthChecked: true,
+        isAuthenticated: true,
+        data: { name: 'AVG', email: 'AVG@mail.ru' },
+        authError: null,
+        authRequest: false
+      };
+      expect(actualState).toEqual(expectedState);
     });
   });
   describe('Проверка Login c Pending', () => {
@@ -45,6 +53,14 @@ describe('Проверка слайса Auth', () => {
         },
         loginUser.pending('', { email: '', password: '' })
       );
+      const expectedState = {
+        isAuthChecked: false,
+        isAuthenticated: false,
+        data: null,
+        authError: null,
+        authRequest: true
+      };
+      expect(actualState).toEqual(expectedState);
     });
   });
   describe('Проверка Login c Rejected', () => {
@@ -58,6 +74,15 @@ describe('Проверка слайса Auth', () => {
         },
         loginUser.rejected(error, '', { email: '', password: '' })
       );
+
+      const expectedState = {
+        isAuthChecked: true,
+        isAuthenticated: false,
+        data: null,
+        authError: 'Ошибка',
+        authRequest: false
+      };
+      expect(actualState).toEqual(expectedState);
     });
   });
 
@@ -79,6 +104,15 @@ describe('Проверка слайса Auth', () => {
           { email: 'AVG@mail.ru', password: 'AVG@mail.ru', name: 'AVG' }
         )
       );
+
+      const expectedState = {
+        isAuthChecked: false,
+        isAuthenticated: false,
+        data: { name: 'AVG', email: 'AVG@mail.ru' },
+        authError: null,
+        authRequest: false
+      };
+      expect(actualState).toEqual(expectedState);
     });
   });
   describe('Проверка Register User c Pending', () => {
@@ -89,6 +123,15 @@ describe('Проверка слайса Auth', () => {
         },
         registerUser.pending('', { email: '', password: '', name: '' })
       );
+
+      const expectedState = {
+        isAuthChecked: false,
+        isAuthenticated: false,
+        data: null,
+        authError: null,
+        authRequest: true
+      };
+      expect(actualState).toEqual(expectedState);
     });
   });
   describe('Проверка Register User c Rejected', () => {
@@ -102,6 +145,15 @@ describe('Проверка слайса Auth', () => {
         },
         registerUser.rejected(error, '', { name: '', email: '', password: '' })
       );
+
+      const expectedState = {
+        isAuthChecked: false,
+        isAuthenticated: false,
+        data: null,
+        authError: 'Ошибка',
+        authRequest: false
+      };
+      expect(actualState).toEqual(expectedState);
     });
   });
 
@@ -110,7 +162,8 @@ describe('Проверка слайса Auth', () => {
       const actualState = authSlice(
         {
           ...initialState,
-          authRequest: true
+          authRequest: true,
+          data: { name: 'GVA', email: 'GVA@mail.ru' }
         },
         updateUser.fulfilled(
           {
@@ -121,16 +174,35 @@ describe('Проверка слайса Auth', () => {
           { email: '', password: '' }
         )
       );
+
+      const expectedState = {
+        isAuthChecked: false,
+        isAuthenticated: false,
+        data: { name: 'AVG', email: 'AVG@mail.ru' },
+        authError: null,
+        authRequest: false
+      };
+      expect(actualState).toEqual(expectedState);
     });
   });
   describe('Проверка Update User c Pending', () => {
     test('Проверка updateUser.pending', () => {
       const actualState = authSlice(
         {
-          ...initialState
+          ...initialState,
+          data: { name: 'GVA', email: 'GVA@mail.ru' }
         },
         updateUser.pending('', { email: '', password: '' })
       );
+
+      const expectedState = {
+        isAuthChecked: false,
+        isAuthenticated: false,
+        data: { name: 'GVA', email: 'GVA@mail.ru' },
+        authError: null,
+        authRequest: true
+      };
+      expect(actualState).toEqual(expectedState);
     });
   });
   describe('Проверка Update User c Rejected', () => {
@@ -140,10 +212,20 @@ describe('Проверка слайса Auth', () => {
       const actualState = authSlice(
         {
           ...initialState,
-          authRequest: true
+          authRequest: true,
+          data: { name: 'GVA', email: 'GVA@mail.ru' }
         },
         updateUser.rejected(error, '', { name: '', email: '', password: '' })
       );
+
+      const expectedState = {
+        isAuthChecked: false,
+        isAuthenticated: false,
+        data: { name: 'GVA', email: 'GVA@mail.ru' },
+        authError: 'Ошибка',
+        authRequest: false
+      };
+      expect(actualState).toEqual(expectedState);
     });
   });
 
@@ -152,21 +234,46 @@ describe('Проверка слайса Auth', () => {
       let arg;
       const actualState = authSlice(
         {
-          ...initialState,
+          isAuthChecked: true,
+          isAuthenticated: true,
+          data: { name: 'AVG', email: 'AVG@mail.ru' },
+          authError: null,
           authRequest: true
         },
         logout.fulfilled(arg, '')
       );
+
+      const expectedState = {
+        isAuthChecked: false,
+        isAuthenticated: false,
+        data: null,
+        authError: null,
+        authRequest: false
+      };
+      expect(actualState).toEqual(expectedState);
     });
   });
   describe('Проверка Logout User c Pending', () => {
     test('Проверка logoutUser.pending', () => {
       const actualState = authSlice(
         {
-          ...initialState
+          isAuthChecked: true,
+          isAuthenticated: true,
+          data: { name: 'AVG', email: 'AVG@mail.ru' },
+          authError: null,
+          authRequest: false
         },
         logout.pending('')
       );
+
+      const expectedState = {
+        isAuthChecked: true,
+        isAuthenticated: true,
+        data: { name: 'AVG', email: 'AVG@mail.ru' },
+        authError: null,
+        authRequest: true
+      };
+      expect(actualState).toEqual(expectedState);
     });
   });
   describe('Проверка Logout User c Rejected', () => {
@@ -175,11 +282,23 @@ describe('Проверка слайса Auth', () => {
 
       const actualState = authSlice(
         {
-          ...initialState,
+          isAuthChecked: true,
+          isAuthenticated: true,
+          data: { name: 'AVG', email: 'AVG@mail.ru' },
+          authError: null,
           authRequest: true
         },
         logout.rejected(error, '')
       );
+
+      const expectedState = {
+        isAuthChecked: true,
+        isAuthenticated: true,
+        data: { name: 'AVG', email: 'AVG@mail.ru' },
+        authError: 'Ошибка',
+        authRequest: false
+      };
+      expect(actualState).toEqual(expectedState);
     });
   });
 
@@ -198,6 +317,15 @@ describe('Проверка слайса Auth', () => {
           ''
         )
       );
+
+      const expectedState = {
+        isAuthChecked: true,
+        isAuthenticated: true,
+        data: { name: 'AVG', email: 'AVG@mail.ru' },
+        authError: null,
+        authRequest: false
+      };
+      expect(actualState).toEqual(expectedState);
     });
   });
   describe('Проверка получения User c Pending', () => {
@@ -208,6 +336,15 @@ describe('Проверка слайса Auth', () => {
         },
         getUser.pending('')
       );
+
+      const expectedState = {
+        isAuthChecked: false,
+        isAuthenticated: false,
+        data: null,
+        authError: null,
+        authRequest: true
+      };
+      expect(actualState).toEqual(expectedState);
     });
   });
   describe('Проверка получения User c Rejected', () => {
@@ -221,6 +358,15 @@ describe('Проверка слайса Auth', () => {
         },
         getUser.rejected(error, '')
       );
+
+      const expectedState = {
+        isAuthChecked: true,
+        isAuthenticated: false,
+        data: null,
+        authError: 'Ошибка',
+        authRequest: false
+      };
+      expect(actualState).toEqual(expectedState);
     });
   });
 });
