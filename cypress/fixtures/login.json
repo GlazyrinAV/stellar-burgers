@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YzhmZmZhYTY0MTc3MDAxYjMzMGQ2MCIsImlhdCI6MTc3NjMxNzgyMSwiZXhwIjoxNzc2MzE5MDIxfQ.waAhsv9vTXp6wpE836dImMtLIS2J35tSoNiG4r3SoFc",
+  "refreshToken": "903b1a2849700284daf6ea26f24ed1bdbce059da66a73101c34e491461fe5506e2bca1b4068e17c7",
+  "user": {
+    "email": "AVG3@yandex.ru",
+    "name": "AVG3"
+  }
+}
