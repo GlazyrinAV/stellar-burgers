@@ -231,7 +231,7 @@ describe('Проверка слайса Auth', () => {
 
   describe('Проверка Logout User c Fullfiled', () => {
     test('Проверка logoutUser.fulfilled', () => {
-      let arg;
+      let voidArg;
       const actualState = authSlice(
         {
           isAuthChecked: true,
@@ -240,7 +240,7 @@ describe('Проверка слайса Auth', () => {
           authError: null,
           authRequest: true
         },
-        logout.fulfilled(arg, '')
+        logout.fulfilled(voidArg, '')
       );
 
       const expectedState = {
