@@ -5,13 +5,13 @@ beforeEach(() => {
   );
   document.cookie =
     'access_token=Bearer%20eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YzhmZmZhYTY0MTc3MDAxYjMzMGQ2MCIsImlhdCI6MTc3NjMxNzgyMSwiZXhwIjoxNzc2MzE5MDIxfQ.waAhsv9vTXp6wpE836dImMtLIS2J35tSoNiG4r3SoFc';
-  cy.intercept('GET', 'https://norma.education-services.ru/api/ingredients', {
+  cy.intercept('GET', '**/api/ingredients', {
     fixture: 'ingredients'
   });
-  cy.intercept('GET', 'https://norma.education-services.ru/api/auth/user', {
+  cy.intercept('GET', '**/api/auth/user', {
     fixture: 'user'
   });
-  cy.intercept('POST', 'https://norma.education-services.ru/api/orders', {
+  cy.intercept('POST', '**/api/orders', {
     fixture: 'order'
   });
 });
@@ -54,8 +54,12 @@ describe('работа модальных окон', function () {
     it('открытие модального окна ингредиента', function () {
       cy.visit('http://localhost:4000');
       cy.get(`[data-cy=${1}]`).click();
-      const modal = cy.get('#modals');
-      modal.contains('Детали ингридиента').should('be.visible');
+      cy.get('#modals').contains('Детали ингридиента').should('be.visible');
+      cy.get('#modals').contains('Краторная булка N-200i').should('be.visible');
+      cy.get('#modals').contains('420').should('be.visible');
+      cy.get('#modals').contains('80').should('be.visible');
+      cy.get('#modals').contains('24').should('be.visible');
+      cy.get('#modals').contains('53').should('be.visible');
     });
   });
   describe('закрытие по клику на крестик', function () {
